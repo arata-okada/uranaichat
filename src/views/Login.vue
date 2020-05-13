@@ -30,22 +30,19 @@
             v-text="errors.password"
             v-if="errors.password"
           ></div>
-          <div class="check">
-            <input v-model="remember" type="checkbox" /> 次回から省略
-          </div>
           <button @click="login" type="button">ログイン</button>
         </div>
       </div>
-      <div class="login-other">
+      <!-- <div class="login-other">
         <div class="login-title">
           <h2>SNSでログイン</h2>
         </div>
         <div class="icon-list">
-          <font-awesome-icon icon="line" class="icon" />
-          <font-awesome-icon icon="twitter" class="icon" />
-          <font-awesome-icon icon="facebook" class="icon" />
+          <font-awesome-icon icon="fab fa-line" />
+          <font-awesome-icon icon="twitter" />
+          <font-awesome-icon icon="facebook" />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -66,7 +63,7 @@ export default {
       this.errors = {};
       var self = this;
       axios
-        .post("/login", {
+        .post("http://127.0.0.1:8000/login", {
           email: this.email,
           password: this.password,
           remember: this.remember,
@@ -93,11 +90,13 @@ export default {
 .home {
   width: 100%;
   height: 100vh;
-  background-color: #f8e7fb;
+  background: url(../images/krystal-ng-PrQqQVPzmlw-unsplash.jpg);
+  background-position: center center;
+  background-size: cover;
   align-items: center;
 }
 .card {
-  min-width: 600px;
+  max-width: 600px;
   height: auto;
   margin: auto;
   padding: 30px;

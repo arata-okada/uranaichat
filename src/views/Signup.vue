@@ -7,9 +7,23 @@
       <div class="mail-adress">
         <h2>メールアドレスで登録</h2>
         <div class="form">
-          <input v-model="name" type="text" placeholder="ニックネーム" class="text" />
-          <input v-model="email" type="email" placeholder="メールアドレス" class="text" />
-          <div class="alert alert-danger" v-text="errors.email" v-if="errors.email"></div>
+          <input
+            v-model="name"
+            type="text"
+            placeholder="ニックネーム"
+            class="text"
+          />
+          <input
+            v-model="email"
+            type="email"
+            placeholder="メールアドレス"
+            class="text"
+          />
+          <div
+            class="alert alert-danger"
+            v-text="errors.email"
+            v-if="errors.email"
+          ></div>
           <input
             v-model="password"
             type="password"
@@ -17,11 +31,15 @@
             placeholder="パスワード"
             class="text"
           />
-          <div class="alert alert-danger" v-text="errors.password" v-if="errors.password"></div>
+          <div
+            class="alert alert-danger"
+            v-text="errors.password"
+            v-if="errors.password"
+          ></div>
           <button @click="signup" type="button">新規登録</button>
         </div>
       </div>
-      <div class="login-other">
+      <!-- <div class="login-other">
         <div class="signup-title">
           <h2>SNSで登録</h2>
         </div>
@@ -30,7 +48,7 @@
           <font-awesome-icon icon="twitter" class="icon" />
           <font-awesome-icon icon="facebook" class="icon" />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -43,7 +61,7 @@ export default {
       name: "",
       email: "",
       password: "",
-      errors: {}
+      errors: {},
     };
   },
   methods: {
@@ -51,16 +69,16 @@ export default {
       this.errors = {};
       var self = this;
       axios
-        .post("https://uranaichatapi.herokuapp.com/register", {
+        .post("http://127.0.0.1:8000/register", {
           name: this.name,
           email: this.email,
-          password: this.password
+          password: this.password,
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           this.$router.replace("/login");
         })
-        .catch(error => {
+        .catch((error) => {
           var responseErrors = error.response.data.errors;
           var errors = {};
 
@@ -69,8 +87,8 @@ export default {
           }
           self.errors = errors;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -78,11 +96,13 @@ export default {
 .home {
   width: 100%;
   height: 100vh;
-  background-color: #f8e7fb;
+  background: url(../images/krystal-ng-PrQqQVPzmlw-unsplash.jpg);
+  background-position: center center;
+  background-size: cover;
   align-items: center;
 }
 .card {
-  min-width: 600px;
+  max-width: 600px;
   height: auto;
   margin: auto;
   padding: 30px;

@@ -18,6 +18,10 @@
         <font-awesome-icon icon="envelope" class="icon" />
         <a href="#">鑑定チャット</a>
       </li>
+      <li>
+        <font-awesome-icon icon="sign-out-alt" class="icon" />
+        <a @click="$store.dispatch('logout')">ログアウト</a>
+      </li>
     </ul>
   </div>
 </template>

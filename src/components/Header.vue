@@ -50,20 +50,13 @@ header a {
   transition: 0.3s;
 }
 .login:hover {
-  background-color: #ff6c94;
-  color: #fff;
-  padding: 15px 15px;
-  margin-left: 10px;
-  border-radius: 50px;
-  transition: 0.3s;
   cursor: pointer;
 }
 .signup:hover {
   padding: 15px 15px;
   margin-left: 10px;
   border-radius: 50px;
-  background-color: #fff;
-  color: #000;
+  opacity: 0.8;
   transition: 0.3s;
   cursor: pointer;
 }

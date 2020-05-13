@@ -8,18 +8,22 @@ import store from "../store/index";
 
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+  {
     path: "/",
     name: "Home",
     component: Home,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/divinerslists",
     name: "DivinersLists",
     component: DivinersLists,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/signup",
@@ -40,12 +44,15 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth) && !store.state.auth) {
+  if (
+    to.matched.some((record) => record.meta.requiresAuth) &&
+    !store.state.auth
+  ) {
     next({
-      path: '/login',
+      path: "/login",
       query: {
-        redirect: to.fullPath
-      }
+        redirect: to.fullPath,
+      },
     });
   } else {
     next();

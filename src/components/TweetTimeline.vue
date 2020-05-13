@@ -62,7 +62,6 @@
 }
 .share-button {
   display: inline-block;
-  float: right;
   outline: none;
   border: none;
   border-radius: 10px;
@@ -80,7 +79,7 @@
 .tweet-box {
   width: 100%;
   height: auto;
-  border: 1px solid #ada3cb;
+  border: 1px solid #e7dfff;
 }
 .tweet-thumb {
   width: 15%;
