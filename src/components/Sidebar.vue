@@ -4,19 +4,19 @@
     <ul class="sidebar-ul">
       <li>
         <font-awesome-icon icon="home" class="icon" />
-        <a href="#">ホーム</a>
+        <a @click="$router.push('/home')">ホーム</a>
       </li>
       <li>
         <font-awesome-icon icon="search" class="icon" />
-        <a @click="$router.push('/divinerslists')">占い師を探す</a>
+        <a @click="$router.push('/divinerlists')">占い師を探す</a>
       </li>
       <li>
         <font-awesome-icon icon="flag" class="icon" />
-        <a href="#">お知らせ</a>
+        <a>お知らせ</a>
       </li>
       <li>
         <font-awesome-icon icon="envelope" class="icon" />
-        <a href="#">鑑定チャット</a>
+        <a>鑑定チャット</a>
       </li>
       <li>
         <font-awesome-icon icon="sign-out-alt" class="icon" />
@@ -32,7 +32,7 @@
   width: 23%;
 }
 .sidebar-ul li {
-  padding: 15px 0;
+  padding: 20px 0;
   font-size: 20px;
   font-weight: bolder;
   list-style-type: none;

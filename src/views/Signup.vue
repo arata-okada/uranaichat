@@ -4,51 +4,66 @@
       <div class="signup-title">
         <h1>新規登録</h1>
       </div>
-      <div class="mail-adress">
-        <h2>メールアドレスで登録</h2>
-        <div class="form">
-          <input
-            v-model="name"
-            type="text"
-            placeholder="ニックネーム"
-            class="text"
-          />
-          <input
-            v-model="email"
-            type="email"
-            placeholder="メールアドレス"
-            class="text"
-          />
-          <div
-            class="alert alert-danger"
-            v-text="errors.email"
-            v-if="errors.email"
-          ></div>
-          <input
-            v-model="password"
-            type="password"
-            v-show-password-input
-            placeholder="パスワード"
-            class="text"
-          />
-          <div
-            class="alert alert-danger"
-            v-text="errors.password"
-            v-if="errors.password"
-          ></div>
-          <button @click="signup" type="button">新規登録</button>
-        </div>
+      <div class="box-container">
+        <form class="form">
+          <div class="box">
+            <label for="user_name">ユーザー名</label>
+            <input
+              v-model="screen_name"
+              type="text"
+              placeholder="hanako"
+              class="text"
+              id="user_name"
+            />
+          </div>
+          <div class="box">
+            <label for="nickname">ニックネーム</label>
+            <input v-model="name" type="text" placeholder="はなこ" class="text" id="nickname" />
+          </div>
+          <!-- <div class="profile">
+            <p>プロフィール画像</p>
+            <input type="file" @change="fileSelected" />
+            <button @click="fileUpload">アップロード</button>
+           <p v-show="showUserImage">
+              <img :src="user.file_path" />
+            </p>
+          </div>-->
+          <div class="box">
+            <label for="email">メールアドレス</label>
+            <input
+              v-model="email"
+              type="email"
+              placeholder="example@example.com"
+              class="text"
+              id="email"
+            />
+          </div>
+          <div class="alert alert-danger" v-text="errors.email" v-if="errors.email"></div>
+          <div class="box">
+            <label for="password">パスワード</label>
+            <input
+              v-model="password"
+              type="password"
+              class="text"
+              name="password"
+              autocomplete="on"
+            />
+          </div>
+          <div class="box">
+            <label for="introduction">自己紹介</label>
+            <textarea
+              v-model="introduction"
+              placeholder="ここに自己紹介を書きましょう！"
+              name="introduction"
+              id="introduction"
+              cols="30"
+              rows="10"
+            ></textarea>
+          </div>
+          <div class="alert alert-danger" v-text="errors.password" v-if="errors.password"></div>
+          <button @click="signup" type="button" class="signup_button">新規登録</button>
+        </form>
       </div>
-      <!-- <div class="login-other">
-        <div class="signup-title">
-          <h2>SNSで登録</h2>
-        </div>
-        <div class="icon-list">
-          <font-awesome-icon icon="line" class="icon" />
-          <font-awesome-icon icon="twitter" class="icon" />
-          <font-awesome-icon icon="facebook" class="icon" />
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -58,10 +73,16 @@ import axios from "axios";
 export default {
   data() {
     return {
+      screen_name: "",
       name: "",
       email: "",
       password: "",
-      errors: {},
+      sex: "",
+      introduction: "",
+      errors: {}
+      // fileInfo: "",
+      // user: "",
+      // showUserImage: false
     };
   },
   methods: {
@@ -70,15 +91,19 @@ export default {
       var self = this;
       axios
         .post("http://127.0.0.1:8000/register", {
+          screen_name: this.screen_name,
           name: this.name,
           email: this.email,
           password: this.password,
+          // sex: this.sex,
+          introduction: this.introduction
         })
-        .then((response) => {
+        .then(response => {
           console.log(response);
-          this.$router.replace("/login");
+          alert("新規登録完了");
+          this.$router.replace("/");
         })
-        .catch((error) => {
+        .catch(error => {
           var responseErrors = error.response.data.errors;
           var errors = {};
 
@@ -87,8 +112,24 @@ export default {
           }
           self.errors = errors;
         });
-    },
-  },
+    }
+    // fileSelected(event) {
+    //   this.fileInfo = event.target.files[0];
+    // },
+    // fileUpload() {
+    //   const formData = new FormData();
+
+    //   formData.append("file", this.fileInfo);
+
+    //   axios
+    //     .post("http://127.0.0.1:8000/api/fileupload", formData)
+    //     .then(response => {
+    //       console.log(response);
+    //       // this.user = response.data;
+    //       // if (response.data.file_path) this.showUserImage = true;
+    //     });
+    // }
+  }
 };
 </script>
 
@@ -102,6 +143,7 @@ export default {
   align-items: center;
 }
 .card {
+  width: 100%;
   max-width: 600px;
   height: auto;
   margin: auto;
@@ -114,35 +156,41 @@ export default {
   box-sizing: border-box;
 }
 .signup-title h1 {
+  margin: 20px;
   font-size: 35px;
 }
-.text {
-  width: 95%;
-  height: 45px;
+.box {
+  width: 100%;
   margin-top: 20px;
+  text-align: left;
+}
+label {
+  display: inline-block;
+  margin: 0 0 10px 20px;
+  font-size: 22px;
+}
+.text {
+  display: block;
+  width: 85%;
+  height: 60px;
+  margin: 0 auto;
   padding-left: 20px;
   border-radius: 30px;
   border: 1px solid #ff6c94;
   outline: none;
-}
-.form button {
-  width: 100%;
-  height: 45px;
-  margin-top: 20px;
-  border-radius: 30px;
-  border: 1px solid #ff6c94;
-  background-color: #ff6c94;
-  color: #fff;
   font-size: 20px;
-  outline: none;
-  transition: 0.3s;
-  cursor: pointer;
 }
-.form button:hover {
+#introduction {
+  display: block;
+  width: 85%;
+  height: 150px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 10px;
   border: 1px solid #ff6c94;
-  background-color: #fff;
-  color: #000;
-  transition: 0.3s;
+  outline: none;
+  font-size: 20px;
+  resize: none;
 }
 .mail button:focus {
   outline: 0;
@@ -150,5 +198,60 @@ export default {
 h2 {
   margin: 40px 0 15px;
   font-size: 23px;
+}
+.profile {
+  margin-top: 20px;
+  text-align: left;
+}
+.profile p {
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+.signup_button {
+  width: 100%;
+  height: 60px;
+  margin-top: 40px;
+  border-radius: 30px;
+  border: 1px solid #ff6c94;
+  background-color: #ff6c94;
+  color: #fff;
+  font-size: 25px;
+  outline: none;
+  transition: 0.2s;
+  cursor: pointer;
+}
+.signup_button:hover {
+  border: 1px solid #ff6c94;
+  background-color: #fff;
+  color: #000;
+  transition: 0.2s;
+}
+.radioArea {
+  height: 40px;
+}
+.radioArea input[type="radio"] {
+  width: 13pt; /* 大きさ：横 */
+  height: 13pt; /* 大きさ：縦 */
+  vertical-align: top; /* 並び位置   */
+  display: none; /* チェックボックス非表示 */
+}
+/* --- チェックボックス直後のlabel --- */
+.radioArea input[type="radio"] + label {
+  padding: 0 4px; /* labelの余白 */
+  font-size: 20px; /* labelの文字サイズ */
+  border: 3px solid rgba(0, 0, 0, 0); /* labelの枠線 */
+  border-radius: 5px; /* labelの角丸 */
+  cursor: pointer; /* カーソル設定 */
+  transition: 0.2s; /* なめらか変化 */
+}
+/* --- 選択されたチェックボックス直後のlabel --- */
+.radioArea input[type="radio"]:checked + label {
+  border: 3px solid #ff6c94; /* labelの枠線 */
+  padding: 5px;
+  margin: 0 50px;
+}
+/* --- 選択されていないチェックボックス直後のlabelにマウスが乗った --- */
+.radioArea input[type="radio"]:not(:checked) + label:hover {
+  background: #ffd9e3; /* lebelの背景 */
 }
 </style>

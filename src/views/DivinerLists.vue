@@ -3,21 +3,24 @@
     <Header></Header>
     <main class="flex">
       <Sidebar></Sidebar>
-      <div class="diviners">
-        <h2 class="title">占い師を探す</h2>
-        <div class="choice-bottom flex">
-          <div class="left-choice">総合</div>
-          <div class="right-choice">人気</div>
+      <div class="users">
+        <h2 class="title">占い師・ユーザーを探す</h2>
+        <div class="md-form">
+          <input class="form-control" type="text" placeholder="Search" />
         </div>
-        <div class="diviners-box flex" v-for="diviner in deivinerlists" :key="diviner.id">
+        <div class="users-box flex" v-for="user in users" :key="user.id">
           <div class="left">
-            <img class="tweet-thumb-img_2" src="../images/omid-armin-6G2G6_rq-B0-unsplash.jpg" alt />
+            <img
+              class="tweet-thumb-img_2"
+              src="../images/omid-armin-6G2G6_rq-B0-unsplash.jpg"
+              alt
+            />
             <font-awesome-icon icon="phone" class="icon phone" />
             <font-awesome-icon icon="envelope" class="icon envelope" />
           </div>
           <div class="right">
-            <h3>{{diviner.name}}</h3>
-            <p>{{diviner.performance}}</p>
+            <h3>{{ user.name }}</h3>
+            <p>{{ user.introduction }}</p>
           </div>
         </div>
       </div>
@@ -26,61 +29,38 @@
 </template>
 
 <script>
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 import axios from "axios";
 export default {
   data() {
     return {
-      divinerlists: []
+      users: [],
     };
   },
-  methods: {
-    mounted() {
-      axios
-        .get("https://uranaichatapi.herokuapp.com/divinerlists")
-        .then(response => {
-          this.divinerlists = response.data;
-        })
-        .catch(error => {
-          alert(error);
-        });
-    }
-  }
+  created() {
+    let vm = this;
+    axios.get("http://127.0.0.1:8000/users").then((response) => {
+      vm.users = response.data;
+    });
+  },
+  components: {
+    Header,
+    Sidebar,
+  },
 };
 </script>
 
 <style scoped>
-.container {
-  width: 80%;
-  margin: 0 auto;
-}
-.diviners {
+.users {
   width: 77%;
 }
 .title {
   font-size: 40px;
   margin: 20px 0;
-  color: #490083;
 }
-.choice-bottom {
-  margin-bottom: 30px;
-}
-.left-choice {
-  padding: 15px 40px;
-  background: #ff6c94;
-  color: #fff;
-  font-size: 23px;
-  font-weight: bold;
-  border: 1px solid #ff6c94;
-}
-.right-choice {
-  padding: 15px 40px;
-  font-size: 23px;
-  border: 1px solid #ff6c94;
-}
-
-.diviners-box {
+.users-box {
   width: 100%;
-  height: auto;
   margin: 20px 0;
   box-shadow: 0px 4px 14px #f8e7fb;
   padding-bottom: 10px;
@@ -121,6 +101,16 @@ export default {
   font-size: 16px;
   line-height: 1.2;
 }
+input.form-control {
+  width: 40%;
+  height: 30px;
+  border: none;
+  border-bottom: solid 2px #ff6c94;
+  outline: none;
+  font-size: 20px;
+  margin: 20px 0;
+  padding: 3px 10px;
+}
 </style>
 
 <script>
@@ -130,7 +120,7 @@ import Sidebar from "../components/Sidebar";
 export default {
   components: {
     Header,
-    Sidebar
-  }
+    Sidebar,
+  },
 };
 </script>

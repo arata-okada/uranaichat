@@ -7,30 +7,15 @@
       <div class="mail-adress">
         <h2>メールアドレスでログイン</h2>
         <div class="form">
-          <input
-            v-model="email"
-            type="email"
-            placeholder="メールアドレス"
-            class="text"
-          />
-          <div
-            class="alert alert-danger"
-            v-text="errors.email"
-            v-if="errors.email"
-          ></div>
-          <input
-            v-model="password"
-            type="password"
-            v-show-password-input
-            placeholder="パスワード"
-            class="text"
-          />
-          <div
-            class="alert alert-danger"
-            v-text="errors.password"
-            v-if="errors.password"
-          ></div>
+          <input v-model="email" type="email" placeholder="メールアドレス" class="text" />
+          <div class="alert alert-danger" v-text="errors.email" v-if="errors.email"></div>
+          <input v-model="password" type="password" placeholder="パスワード" class="text" />
+          <div class="alert alert-danger" v-text="errors.password" v-if="errors.password"></div>
+          <div class="remember">
+            <input type="checkbox" v-model="remember" /> 次回から省略
+          </div>
           <button @click="login" type="button">ログイン</button>
+          <p @click="$router.push('/signup')" class="to-signup">新規登録はこちら</p>
         </div>
       </div>
       <!-- <div class="login-other">
@@ -42,47 +27,29 @@
           <font-awesome-icon icon="twitter" />
           <font-awesome-icon icon="facebook" />
         </div>
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
       email: "",
       password: "",
       remember: "",
-      errors: {},
+      errors: {}
     };
   },
   methods: {
     login() {
-      this.errors = {};
-      var self = this;
-      axios
-        .post("http://127.0.0.1:8000/login", {
-          email: this.email,
-          password: this.password,
-          remember: this.remember,
-        })
-        .then((response) => {
-          console.log(response);
-          this.$router.replace("/");
-        })
-        .catch((error) => {
-          var responseErrors = error.response.data.errors;
-          var errors = {};
-
-          for (var key in responseErrors) {
-            errors[key] = responseErrors[key][0];
-          }
-          self.errors = errors;
-        });
-    },
-  },
+      this.$store.dispatch("login", {
+        email: this.email,
+        password: this.password
+      });
+    }
+  }
 };
 </script>
 
@@ -125,6 +92,14 @@ export default {
   text-align: left;
   margin-top: 20px;
 }
+.remember {
+  text-align: left;
+  margin-top: 20px;
+}
+.remember input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
 .form button {
   width: 100%;
   height: 60px;
@@ -134,16 +109,15 @@ export default {
   background-color: #ff6c94;
   color: #fff;
   font-size: 25px;
-  font-weight: bolder;
   outline: none;
-  transition: 0.3s;
+  transition: 0.2s;
   cursor: pointer;
 }
 .form button:hover {
   border: 1px solid #ff6c94;
   background-color: #fff;
   color: #000;
-  transition: 0.3s;
+  transition: 0.2s;
 }
 .mail button:focus {
   outline: 0;
@@ -151,5 +125,16 @@ export default {
 h2 {
   margin: 40px 0 15px;
   font-size: 23px;
+}
+.to-signup {
+  display: block;
+  margin: 30px 0 0;
+  padding: 10px;
+  border-radius: 30px;
+  font-size: 23px;
+  cursor: pointer;
+}
+.to-signup:hover {
+  text-decoration: underline;
 }
 </style>

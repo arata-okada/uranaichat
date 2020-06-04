@@ -212,4 +212,8 @@ img {
 .center {
   justify-content: center;
 }
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
 </style>

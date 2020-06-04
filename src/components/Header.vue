@@ -1,12 +1,12 @@
 <template>
   <header class="flex between">
-    <a href="#">
+    <a @click="$router.push('/home')">
       <h1 class="title">占いチャット</h1>
     </a>
     <div class="right flex">
       <font-awesome-icon icon="search" class="icon" />
-      <p class="login" @click="$router.push('/login')">ログイン</p>
-      <p class="signup" @click="$router.push('/signup')">新規登録</p>
+      <!-- <p class="login" @click="$router.push('/login')">ログイン</p>
+      <p class="signup" @click="$router.push('/signup')">新規登録</p> -->
     </div>
   </header>
 </template>
@@ -22,6 +22,7 @@ header a {
   margin: 20px 0;
   color: #ff6c94;
   text-decoration: none;
+  cursor: pointer;
 }
 .form-control {
   border: #ff6c94;
@@ -35,7 +36,7 @@ header a {
   font-size: 25px;
   cursor: pointer;
 }
-.login {
+/* .login {
   padding: 15px 15px;
   margin-left: 10px;
   border-radius: 50px;
@@ -59,5 +60,5 @@ header a {
   opacity: 0.8;
   transition: 0.3s;
   cursor: pointer;
-}
+} */
 </style>

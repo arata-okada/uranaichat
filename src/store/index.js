@@ -20,11 +20,25 @@ export default new Vuex.Store({
       state.user = payload;
     },
     logout(state, payload) {
-      state.auth = payload;
+      state.auth = payload
     },
+    changeIntroduction(state, payload) {
+      state.user.introduction = payload
+    },
+    changeName(state, payload) {
+      state.user.name = payload
+    },
+    changeScreenName(state, payload) {
+      state.user.screen_name = payload
+    }
   },
   actions: {
-    async login({ commit }, { email, password }) {
+    async login({
+      commit
+    }, {
+      email,
+      password
+    }) {
       let responseLogin = await axios.post("http://127.0.0.1:8000/login", {
         email: email,
         password: password,
@@ -36,9 +50,11 @@ export default new Vuex.Store({
       });
       commit("auth", responseLogin.data.auth);
       commit("user", responseUser.data[0]);
-      router.replace("/");
+      router.replace("/home");
     },
-    logout({ commit }) {
+    logout({
+      commit
+    }) {
       axios
         .post("http://127.0.0.1:8000/logout", {
           auth: this.state.auth,
@@ -52,5 +68,26 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
+    changeIntroduction({
+      commit
+    }, {
+      introduction
+    }) {
+      commit('changeIntroduction', introduction)
+    },
+    changeName({
+      commit
+    }, {
+      name
+    }) {
+      commit('changeName', name)
+    },
+    changeScreenName({
+      commit
+    }, {
+      screen_name
+    }) {
+      commit('changeScreenName', screen_name)
+    }
   },
 });
